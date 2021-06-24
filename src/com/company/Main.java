@@ -73,24 +73,24 @@ public class Main extends JFrame {
                         null, options, options[0]);
 //
            if (response == 0) {
-               panelMain.setBackground(Color.MAGENTA);
-//               addition();
+
+                addition();
 
            } else {panelMain.setBackground(Color.green);}
             }
 
             private void addition() {
 
-                txtFieldAddQuest = new JFormattedTextField();
-                panelMain.add(txtFieldAddQuest);
-               Random rand = new Random();
+                Random rand = new Random();
                 for(int i = 1; i <=20; i++) {
                     int randomNum1 = rand.nextInt(20-1) ;
-                    int randomNum2 = rand.nextInt(20-1);
+                    int randomNum2 = rand.nextInt(19-0);
 
                             String operAdd = new String();
                operAdd = randomNum1 + " + " + randomNum2 + " = ";
-               txtFieldAddQuest.setText(operAdd);
+               txtFieldMain.setText(operAdd);
+
+//               txtFieldName.setText();
 
             }}
         });
