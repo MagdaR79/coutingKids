@@ -11,8 +11,9 @@ public class Main extends JFrame {
     JFrame frameMain;
     JPanel panelMain;
     JTextField txtFieldMain, txtFieldName, txtFieldAddQuest, txtFieldAddResponse;
-    JButton btnStart, btnExit, btnBack;
-
+    JButton btnStart, btnExit, btnBack,btnCheck;
+    String response ;
+    int randomNum1, randomNum2, randSum, resp;
 
     public Main () {
         this.initComponents();
@@ -25,7 +26,7 @@ public class Main extends JFrame {
         frameMain = new JFrame();
        frameMain.setTitle("Kids count!");
         frameMain.setBounds(10, 10, 200,200);
-       frameMain.setDefaultCloseOperation(3);
+       frameMain.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frameMain.setVisible(true);
 
 //        lblMain
@@ -58,6 +59,11 @@ public class Main extends JFrame {
         btnStart = new JButton("START");
         btnStart.setLocation(60, 80);
         panelMain.add(btnStart);
+//        buttonCheck
+          btnCheck = new JButton("Check");
+        panelMain.add(btnCheck);
+        btnCheck.setLocation(100, 100);
+
         btnStart.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -82,21 +88,57 @@ public class Main extends JFrame {
             private void addition() {
 
                 Random rand = new Random();
-                for(int i = 1; i <=20; i++) {
-                    int randomNum1 = rand.nextInt(20-1) ;
-                    int randomNum2 = rand.nextInt(19-0);
+                for (int i = 1; i <= 20; i++) {
+                    randomNum1 = rand.nextInt(20 - 1);
+                    randomNum2 = rand.nextInt(19);
+                    randSum = randomNum1 + randomNum2;
 
-                            String operAdd = new String();
-               operAdd = randomNum1 + " + " + randomNum2 + " = ";
-               txtFieldMain.setText(operAdd);
+                    String operAdd = new String();
+                    operAdd = randomNum1 + " + " + randomNum2 + " = ";
+                    txtFieldMain.setText(operAdd);
 
-//               txtFieldName.setText();
+//
+                    btnCheck.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            String brawo = new String("Brawo");
+                            String [] options = new String[] {"One more time!", "Back"};
+                            response = txtFieldName.getText();
+                            resp = Integer.parseInt(response);
+//for (int i = 0; i<)
+                            if (randSum == resp) {
+                              int response1 =  JOptionPane.showOptionDialog(null, "Correct!", brawo, JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                                        null, options, options[0]);
 
-            }}
-        });
+                              if (response1 == 0) {
+
+                                    start();
+
+                                } else {panelMain.setBackground(Color.magenta);}
+                            } else {
+                               String [] options2 = new String[] {"Try again!", "Exit"};
+                               int resp2 = JOptionPane.showOptionDialog(null, "Incorrect!", brawo, JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                                       null, options, options2[0]);
+                               if (resp2 == 0) {
+                                   start();
+                               }
+                               else if (resp2 == 1){
+                                   System.exit(0);
+                               }
+
+
+                            }
+
+// "Correct"; try again, exit
+
+                            }
+                        }
+                    );
+                }     }});
 
 
     }
+
 
     public static void main(String[] args) {
 	new Main();
