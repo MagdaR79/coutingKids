@@ -13,7 +13,7 @@ public class Main extends JFrame {
     JTextField txtFieldMain, txtFieldName, txtFieldAddQuest, txtFieldAddResponse;
     JButton btnStart, btnExit, btnBack,btnCheck;
     String response ;
-    int randomNum1, randomNum2, randSum, resp;
+    int randomNum1, randomNum2, randSum, resp, randSub;
 
     public Main () {
         this.initComponents();
@@ -73,17 +73,25 @@ public class Main extends JFrame {
             private void start() {
                 String name = txtFieldName.getText();
                 String hello = "Hello " + name + "!";
-                String[] options = new String[] {"Addition", "Subtraction", "Cancel"};
+                panelMain.remove(btnStart);
+                txtFieldName.setText("");
+                String[] options = new String[]{"Addition", "Subtraction", "Cancel"};
                 int response = JOptionPane.showOptionDialog(null, "Choose what you want to do: ", hello,
                         JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                         null, options, options[0]);
 //
-           if (response == 0) {
+                if (response == 0) {
 
-                addition();
+                    addition();
 
-           } else {panelMain.setBackground(Color.green);}
+
+                } else if (response == 1) {
+                    subtraction();
+                } else {
+                    System.exit(0);
+                }
             }
+
 
             private void addition() {
 
@@ -93,55 +101,110 @@ public class Main extends JFrame {
                     randomNum2 = rand.nextInt(19);
                     randSum = randomNum1 + randomNum2;
 
-                    String operAdd = new String();
-                    operAdd = randomNum1 + " + " + randomNum2 + " = ";
+                    String operAdd = randomNum1 + " + " + randomNum2 + " = ";
                     txtFieldMain.setText(operAdd);
 
 //
-                    btnCheck.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            String brawo = new String("Brawo");
-                            String [] options = new String[] {"One more time!", "Back"};
-                            response = txtFieldName.getText();
-                            resp = Integer.parseInt(response);
+                    btnCheck.addActionListener(e -> {
+                                String brawo = "Brawo";
+                                String[] options = new String[]{"One more time!", "Back"};
+                                response = txtFieldName.getText();
+                                resp = Integer.parseInt(response);
+                                txtFieldName.setText("");
 //for (int i = 0; i<)
-                            if (randSum == resp) {
-                              int response1 =  JOptionPane.showOptionDialog(null, "Correct!", brawo, JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
-                                        null, options, options[0]);
+                                if (randSum == resp) {
 
-                              if (response1 == 0) {
+                                    int response1 = JOptionPane.showOptionDialog(null, "Correct!", brawo, JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                                            null, options, options[0]);
 
-                                    start();
+                                    if (response1 == 0) {
 
-                                } else {panelMain.setBackground(Color.magenta);}
-                            } else {
-                               String [] options2 = new String[] {"Try again!", "Exit"};
-                               int resp2 = JOptionPane.showOptionDialog(null, "Incorrect!", brawo, JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
-                                       null, options, options2[0]);
-                               if (resp2 == 0) {
-                                   start();
-                               }
-                               else if (resp2 == 1){
-                                   System.exit(0);
-                               }
+                                        start();
+
+                                    } else {
+                                        panelMain.setBackground(Color.magenta);
+                                    }
+                                } else {
+                                    String keepPractice = "Keep practice!";
+                                    String[] options2 = new String[]{"Try again!", "Exit"};
+                                    int resp2 = JOptionPane.showOptionDialog(null, "Incorrect!", keepPractice, JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                                            null, options2, options2[0]);
+                                    if (resp2 == 0) {
+                                        start();
+                                    } else {
+                                        System.exit(0);
+                                    }
 
 
-                            }
+                                }
 
 // "Correct"; try again, exit
 
                             }
-                        }
                     );
-                }     }});
+                }
+            }
+
+            private void subtraction() {
+                Random rand = new Random();
+                for (int i = 1; i <= 20; i++) {
+                    randomNum1 = rand.nextInt(20);
+                    randomNum2 = rand.nextInt(20);
+                    if (randomNum1 > randomNum2) {
+                        randSub = randomNum1 - randomNum2;
+
+                        String operSub = randomNum1 + " - " + randomNum2 + " = ";
+                        txtFieldMain.setText(operSub);
+
+//
+                        btnCheck.addActionListener(e -> {
+                                    String brawo = "Brawo";
+                                    String[] options = new String[]{"One more time!", "Back"};
+                                    response = txtFieldName.getText();
+                                    resp = Integer.parseInt(response);
+                                    txtFieldName.setText("");
+//for (int i = 0; i<)
+                                    if (randSub == resp) {
+
+                                        int response1 = JOptionPane.showOptionDialog(null, "Correct!", brawo, JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                                                null, options, options[0]);
+
+                                        if (response1 == 0) {
+
+                                            start();
+
+                                        } else {
+                                            panelMain.setBackground(Color.magenta);
+                                        }
+                                    } else {
+                                        String keepPractice = "Keep practice!";
+                                        String[] options2 = new String[]{"Try again!", "Exit"};
+                                        int resp2 = JOptionPane.showOptionDialog(null, "Incorrect!", keepPractice, JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                                                null, options2, options2[0]);
+                                        if (resp2 == 0) {
+                                            start();
+                                        } else {
+                                            System.exit(0);
+                                        }}
 
 
-    }
+                                    });}
+                    else if (randomNum1==0||randomNum1<randomNum2){  subtraction();}
+
+// "Correct"; try again, exit
+
+//                    simplify line above -> it's too heavy!
+
+                }}  }
+                        );
+                    }
 
 
-    public static void main(String[] args) {
-	new Main();
 
-    }
-}
+
+            public static void main(String[] args) {
+                new Main();
+
+            }
+
+        }
