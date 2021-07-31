@@ -64,8 +64,8 @@ this.pack();
 //        panel Center
         panelCenter = new JPanel();
         frameMain.getContentPane().add(panelCenter, BorderLayout.CENTER);
-        BufferedImage img1 = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
-        File file = new File("C:\\Users\\resma\\OneDrive\\Desktop\\elo.png.jpg");
+        BufferedImage img1;
+        File file = new File("C:\\Users\\resma\\IdeaProjects\\coutingKids\\elo.png.jpg");
         img1 = ImageIO.read(file);
         label = new JLabel();
         label.setBounds(0, 10, 100, 100);
