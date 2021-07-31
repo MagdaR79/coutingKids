@@ -1,44 +1,81 @@
 package com.company;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
 public class Main extends JFrame {
 
     JFrame frameMain;
-    JPanel panelMain;
+    JPanel panelMain, panelText, panelCenter;
     JTextField txtFieldMain, txtFieldName, txtFieldAddQuest, txtFieldAddResponse;
-    JButton btnStart, btnExit, btnBack,btnCheck;
-    String response ;
-    int randomNum1, randomNum2, randSum, resp, randSub;
+    JButton btnStart, btnCheck;
+    JLabel label;
+    String name;
+    int randomNum1, randomNum2, randSum,  randSub;
 
-    public Main () {
+//    public class BackgroundPanel extends JPanel {
+//        // The Image to store the background image in.
+//       public Image img;
+//
+//        public BackgroundPanel() {
+//            // Loads the background image and stores in img object.
+//            img = Toolkit.getDefaultToolkit().getImage("elo.png");
+//        }
+//
+//        public void paint(Graphics g) {
+//            // Draws the img to the BackgroundPanel.
+//            g.drawImage(img, 10, 10, null);
+//        }
+//    }
+    public Main () throws IOException {
         this.initComponents();
-
+this.pack();
     }
 
-    public void initComponents() {
+    public void initComponents() throws IOException {
 
 // frameMain
         frameMain = new JFrame();
        frameMain.setTitle("Kids count!");
-        frameMain.setBounds(10, 10, 200,200);
+        frameMain.setPreferredSize(new Dimension(200,200));
        frameMain.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frameMain.setVisible(true);
 
-//        lblMain
-//        JLabel lblMain = new JLabel("Let,s count!");
-//        lblMain.setLocation(50, 10);
-//        frameMain.getContentPane().add(lblMain);
 
 //        panelMain
         panelMain = new JPanel();
-        panelMain.setPreferredSize(new Dimension(180, 180));
+        panelMain.setPreferredSize(new Dimension(180, 220));
         panelMain.setBackground(Color.DARK_GRAY);
-        frameMain.getContentPane().add(panelMain);
+        frameMain.getContentPane().add(panelMain, BorderLayout.NORTH);
+
+//        panel text
+        panelText = new JPanel();
+        panelText.setBackground(Color.blue);
+        panelText.setPreferredSize(new Dimension( 180, 100));
+        frameMain.getContentPane().add(panelText, BorderLayout.SOUTH);
+
+//        panel Center
+        panelCenter = new JPanel();
+        frameMain.getContentPane().add(panelCenter, BorderLayout.CENTER);
+        BufferedImage img1 = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
+        File file = new File("C:\\Users\\resma\\OneDrive\\Desktop\\elo.png.jpg");
+        img1 = ImageIO.read(file);
+        label = new JLabel();
+        label.setBounds(0, 10, 100, 100);
+        label.setIcon(new ImageIcon(img1));
+        panelCenter.add(label);
+
+
+//        BackgroundPanel bcg = new BackgroundPanel();
+//               panelCenter.add(bcg);
+
 
 
 //        textFieldMain
@@ -46,23 +83,39 @@ public class Main extends JFrame {
         txtFieldMain.setText("Enter your name:");
         txtFieldMain.setEditable(false);
         txtFieldMain.setBounds(20, 20, 100, 40);
-        panelMain.add(txtFieldMain);
+        panelText.add(txtFieldMain, BorderLayout.WEST);
 
 //        textFieldName
-       txtFieldName= new JFormattedTextField("");
+       txtFieldName= new JFormattedTextField();
        txtFieldName.setLocation(60, 20);
         txtFieldName.setPreferredSize(new Dimension(100, 40));
         txtFieldName.setEditable(true);
-        panelMain.add(txtFieldName);
+        panelText.add(txtFieldName, BorderLayout.CENTER);
+
+//        text Field AddQuest
+        txtFieldAddQuest = new JFormattedTextField();
+        txtFieldAddQuest.setText("Let's count!");
+        txtFieldAddQuest.setEditable(false);
+        txtFieldAddQuest.setBounds(20, 20, 100, 40);
+        panelMain.add(txtFieldAddQuest, BorderLayout.WEST);
+
+
+
+//        text Field add response
+        txtFieldAddResponse= new JFormattedTextField();
+        txtFieldAddResponse.setLocation(60, 20);
+        txtFieldAddResponse.setPreferredSize(new Dimension(100, 40));
+        txtFieldAddResponse.setEditable(true);
+        panelMain.add(txtFieldAddResponse, BorderLayout.CENTER);
 
 //        btnStart
         btnStart = new JButton("START");
-        btnStart.setLocation(60, 80);
-        panelMain.add(btnStart);
+        panelText.add(btnStart, BorderLayout.EAST);
+
 //        buttonCheck
           btnCheck = new JButton("Check");
-        panelMain.add(btnCheck);
-        btnCheck.setLocation(100, 100);
+        panelMain.add(btnCheck, BorderLayout.WEST);
+
 
         btnStart.addActionListener(new ActionListener() {
             @Override
@@ -71,10 +124,8 @@ public class Main extends JFrame {
             }
 
             private void start() {
-                String name = txtFieldName.getText();
+                name = txtFieldName.getText();
                 String hello = "Hello " + name + "!";
-                panelMain.remove(btnStart);
-                txtFieldName.setText("");
                 String[] options = new String[]{"Addition", "Subtraction", "Cancel"};
                 int response = JOptionPane.showOptionDialog(null, "Choose what you want to do: ", hello,
                         JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
@@ -102,16 +153,16 @@ public class Main extends JFrame {
                     randSum = randomNum1 + randomNum2;
 
                     String operAdd = randomNum1 + " + " + randomNum2 + " = ";
-                    txtFieldMain.setText(operAdd);
+                    txtFieldAddQuest.setText(operAdd);
 
 //
                     btnCheck.addActionListener(e -> {
                                 String brawo = "Brawo";
-                                String[] options = new String[]{"One more time!", "Back"};
-                                response = txtFieldName.getText();
-                                resp = Integer.parseInt(response);
-                                txtFieldName.setText("");
-//for (int i = 0; i<)
+                                String[] options = new String[]{"One more time!", "Exit"};
+                                String response = txtFieldAddResponse.getText();
+                             int   resp = Integer.parseInt(response);
+                                txtFieldAddResponse.setText(null);
+
                                 if (randSum == resp) {
 
                                     int response1 = JOptionPane.showOptionDialog(null, "Correct!", brawo, JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
@@ -122,7 +173,7 @@ public class Main extends JFrame {
                                         start();
 
                                     } else {
-                                        panelMain.setBackground(Color.magenta);
+                                        System.exit(0);
                                     }
                                 } else {
                                     String keepPractice = "Keep practice!";
@@ -150,19 +201,22 @@ public class Main extends JFrame {
                 for (int i = 1; i <= 20; i++) {
                     randomNum1 = rand.nextInt(20);
                     randomNum2 = rand.nextInt(20);
-                    if (randomNum1 > randomNum2) {
+                    if (randomNum1 >= randomNum2) {
                         randSub = randomNum1 - randomNum2;
 
                         String operSub = randomNum1 + " - " + randomNum2 + " = ";
-                        txtFieldMain.setText(operSub);
+                        txtFieldAddQuest.setText(operSub);}
 
-//
+                    else {
+                        randSub = randomNum2 - randomNum1;
+                    }
                         btnCheck.addActionListener(e -> {
                                     String brawo = "Brawo";
-                                    String[] options = new String[]{"One more time!", "Back"};
-                                    response = txtFieldName.getText();
-                                    resp = Integer.parseInt(response);
-                                    txtFieldName.setText("");
+                                    String[] options = new String[]{"One more time!", "Exit"};
+                                   String  response = txtFieldAddResponse.getText();
+                                    int resp = Integer.parseInt(response);
+//                           txtFieldAddResponse.contains(null);
+
 //for (int i = 0; i<)
                                     if (randSub == resp) {
 
@@ -173,8 +227,10 @@ public class Main extends JFrame {
 
                                             start();
 
-                                        } else {
-                                            panelMain.setBackground(Color.magenta);
+                                        } else if (response1 == 1) {
+
+//                                             back
+                                            System.exit(0);
                                         }
                                     } else {
                                         String keepPractice = "Keep practice!";
@@ -188,12 +244,8 @@ public class Main extends JFrame {
                                         }}
 
 
-                                    });}
-                    else if (randomNum1==0||randomNum1<randomNum2){  subtraction();}
+                                    });
 
-// "Correct"; try again, exit
-
-//                    simplify line above -> it's too heavy!
 
                 }}  }
                         );
@@ -202,7 +254,7 @@ public class Main extends JFrame {
 
 
 
-            public static void main(String[] args) {
+            public static void main(String[] args) throws IOException {
                 new Main();
 
             }
