@@ -20,20 +20,7 @@ public class Main extends JFrame {
     String name;
     int randomNum1, randomNum2, randSum,  randSub;
 
-//    public class BackgroundPanel extends JPanel {
-//        // The Image to store the background image in.
-//       public Image img;
-//
-//        public BackgroundPanel() {
-//            // Loads the background image and stores in img object.
-//            img = Toolkit.getDefaultToolkit().getImage("elo.png");
-//        }
-//
-//        public void paint(Graphics g) {
-//            // Draws the img to the BackgroundPanel.
-//            g.drawImage(img, 10, 10, null);
-//        }
-//    }
+
     public Main () throws IOException {
         this.initComponents();
 this.pack();
@@ -41,24 +28,37 @@ this.pack();
 
     public void initComponents() throws IOException {
 
-// frameMain
+//         frameMain
         frameMain = new JFrame();
        frameMain.setTitle("Kids count!");
-        frameMain.setPreferredSize(new Dimension(200,200));
+      frameMain.setPreferredSize(new Dimension(580, 520));
+        frameMain.setResizable(true);
+            Toolkit kit = frameMain.getToolkit();
+            GraphicsDevice[] gs = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices();
+            Insets in = kit.getScreenInsets(gs[0].getDefaultConfiguration());
+            Dimension d = kit.getScreenSize();
+
+            int max_width = (d.width - in.left - in.right);
+            int max_height = (d.height - in.top - in.bottom);
+
+            frameMain.setLocation((int) (max_width - frameMain.getWidth()) / 2, (int) (max_height - frameMain.getHeight() ) / 2);
+
+
+
        frameMain.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frameMain.setVisible(true);
-
+        frameMain.pack();
 
 //        panelMain
         panelMain = new JPanel();
-        panelMain.setPreferredSize(new Dimension(180, 220));
+        panelMain.setPreferredSize(new Dimension(180, 40));
         panelMain.setBackground(Color.DARK_GRAY);
         frameMain.getContentPane().add(panelMain, BorderLayout.NORTH);
 
 //        panel text
         panelText = new JPanel();
         panelText.setBackground(Color.blue);
-        panelText.setPreferredSize(new Dimension( 180, 100));
+        panelText.setPreferredSize(new Dimension( 180, 40));
         frameMain.getContentPane().add(panelText, BorderLayout.SOUTH);
 
 //        panel Center
@@ -68,15 +68,9 @@ this.pack();
         File file = new File("C:\\Users\\resma\\IdeaProjects\\coutingKids\\elo.png.jpg");
         img1 = ImageIO.read(file);
         label = new JLabel();
-        label.setBounds(0, 10, 100, 100);
+        label.setBounds(0, 10, 280, 100);
         label.setIcon(new ImageIcon(img1));
         panelCenter.add(label);
-
-
-//        BackgroundPanel bcg = new BackgroundPanel();
-//               panelCenter.add(bcg);
-
-
 
 //        textFieldMain
         txtFieldMain = new JFormattedTextField();
