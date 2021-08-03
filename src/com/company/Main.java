@@ -23,7 +23,7 @@ public class Main extends JFrame {
 
     public Main () throws IOException {
         this.initComponents();
-this.pack();
+pack();
     }
 
     public void initComponents() throws IOException {
@@ -31,7 +31,7 @@ this.pack();
 //         frameMain
         frameMain = new JFrame();
        frameMain.setTitle("Kids count!");
-      frameMain.setPreferredSize(new Dimension(580, 520));
+
         frameMain.setResizable(true);
             Toolkit kit = frameMain.getToolkit();
             GraphicsDevice[] gs = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices();
@@ -40,49 +40,48 @@ this.pack();
 
             int max_width = (d.width - in.left - in.right);
             int max_height = (d.height - in.top - in.bottom);
+        frameMain.setMinimumSize(new Dimension(580, 520));
+            frameMain.setLocation((int) (max_width - frameMain.getWidth()) *2 / 3, (int) (max_height - frameMain.getHeight() ) * 2 / 3);
 
-            frameMain.setLocation((int) (max_width - frameMain.getWidth()) / 2, (int) (max_height - frameMain.getHeight() ) / 2);
 
 
 
-       frameMain.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        frameMain.setVisible(true);
-        frameMain.pack();
 
 //        panelMain
         panelMain = new JPanel();
-        panelMain.setPreferredSize(new Dimension(180, 40));
+        panelMain.setPreferredSize(new Dimension(180, 140));
         panelMain.setBackground(Color.DARK_GRAY);
         frameMain.getContentPane().add(panelMain, BorderLayout.NORTH);
 
+
 //        panel text
         panelText = new JPanel();
-        panelText.setBackground(Color.blue);
-        panelText.setPreferredSize(new Dimension( 180, 40));
+        panelText.setBackground(Color.BLUE);
+        panelText.setPreferredSize(new Dimension( 180, 80));
         frameMain.getContentPane().add(panelText, BorderLayout.SOUTH);
 
 //        panel Center
         panelCenter = new JPanel();
-        frameMain.getContentPane().add(panelCenter, BorderLayout.CENTER);
+        frameMain.getContentPane().add(panelCenter);
         BufferedImage img1;
-        File file = new File("C:\\Users\\resma\\IdeaProjects\\coutingKids\\elo.png.jpg");
+        File file = new File("C:\\Users\\resma\\IdeaProjects\\coutingKids\\elo.jpg");
         img1 = ImageIO.read(file);
         label = new JLabel();
-        label.setBounds(0, 10, 280, 100);
+        label.setBounds(0, 0, 280, 100);
         label.setIcon(new ImageIcon(img1));
-        panelCenter.add(label);
+        panelCenter.add(label, BorderLayout.CENTER);
+
 
 //        textFieldMain
         txtFieldMain = new JFormattedTextField();
         txtFieldMain.setText("Enter your name:");
         txtFieldMain.setEditable(false);
-        txtFieldMain.setBounds(20, 20, 100, 40);
-        panelText.add(txtFieldMain, BorderLayout.WEST);
+        txtFieldMain.setPreferredSize(new Dimension(100, 20));
+        panelText.add(txtFieldMain, BorderLayout.CENTER);
 
 //        textFieldName
        txtFieldName= new JFormattedTextField();
-       txtFieldName.setLocation(60, 20);
-        txtFieldName.setPreferredSize(new Dimension(100, 40));
+       txtFieldName.setPreferredSize(new Dimension(100, 40));
         txtFieldName.setEditable(true);
         panelText.add(txtFieldName, BorderLayout.CENTER);
 
@@ -97,7 +96,6 @@ this.pack();
 
 //        text Field add response
         txtFieldAddResponse= new JFormattedTextField();
-        txtFieldAddResponse.setLocation(60, 20);
         txtFieldAddResponse.setPreferredSize(new Dimension(100, 40));
         txtFieldAddResponse.setEditable(true);
         panelMain.add(txtFieldAddResponse, BorderLayout.CENTER);
@@ -110,6 +108,8 @@ this.pack();
           btnCheck = new JButton("Check");
         panelMain.add(btnCheck, BorderLayout.WEST);
 
+        frameMain.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        frameMain.setVisible(true);
 
         btnStart.addActionListener(new ActionListener() {
             @Override
